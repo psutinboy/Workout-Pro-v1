@@ -1,0 +1,23 @@
+# Workout Pro
+
+Coming soon...
+
+# How to Run the Application
+
+1. Clone the repository.
+2. Navigate to the project directory.
+3. Run `npm install` to install dependencies.
+4. Create a `.env` file for environment variables.
+5. Run `npm run dev` to start the server with nodemon.
+
+## Key Technologies
+
+- Node.js
+- Express.js
+- EJS
+- Nodemon
+- Axios
+- Cookie-parser
+- Morgan
+- Http-errors
+- Dotenv

@@ -1,0 +1,9 @@
+.test {
+  border: 2px solid red;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
