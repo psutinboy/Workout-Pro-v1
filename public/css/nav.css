@@ -1,11 +1,7 @@
-.navbody {
+body {
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
 }
 
 .navbar {
@@ -13,7 +9,7 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    height: 70px;
+    height: 8vh;
     background-color: #f4f4f9;
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
@@ -29,8 +25,8 @@
 }
 
 .nav-item img {
-    width: 24px;
-    height: 24px;
+    width: 32px;
+    height: 32px;
     margin-bottom: 5px;
 }
 
@@ -39,8 +35,8 @@
     top: -20px;
     left: 50%;
     transform: translateX(-50%);
-    width: 50px;
-    height: 50px;
+    width: 12vw;
+    height: 12vw;
     background-color: #fff;
     border-radius: 50%;
     display: flex;
@@ -50,14 +46,61 @@
 }
 
 .plus-icon img {
-    width: 30px;
-    height: 30px;
+    width: 70%;
+    height: 70%;
 }
 
 .fixed-bottom {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: #fff; /* Optional: Set background color */
-    z-index: 1000; /* Ensure it stays on top of other elements */
+    background-color: #fff;
+    z-index: 1000;
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Slightly grey background */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 2vh; /* Use viewport height for padding */
+    border: 1px solid #888;
+    width: 80vw;
+    max-width: 300px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+
+.close-button {
+    align-self: flex-end;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-option {
+    padding: 10px 20px;
+    margin: 10px 0;
+    font-size: 18px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #d3d3d3;
+    text-align: left;
 }

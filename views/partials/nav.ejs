@@ -1,14 +1,25 @@
 <link rel="stylesheet" href="/css/nav.css">
 <nav class="navbar fixed-bottom">
     <div class="nav-item">
-        <img src="" alt="Home"> <!-- Add an onclick function to handle the click event -->
+        <img src="/images/home.png" alt="Home" class="home" onclick="goToHomePage()">
         <span>Home</span>
     </div>
     <div class="nav-item plus-icon"> <!-- Add an onclick function to handle the click event -->
-        <img src="" alt="Add">
+        <img src="/images/add.png" alt="Add" onclick="toggleModal()">
     </div>
     <div class="nav-item">
-        <img src="" alt="Settings"> <!-- Add an onclick function to handle the click event -->
+        <img src="/images/settings.png" alt="Settings" class="Settings"> <!-- Add an onclick function to handle the click event -->
         <span>Settings</span>
     </div>
 </nav>
+
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close-button" onclick="toggleModal()">&times;</span>
+        <button class="modal-option">Upload File</button>
+        <button class="modal-option">Take Picture</button>
+        <button class="modal-option">Create New Workout</button>
+    </div>
+</div>
+
+<script src="/js/nav.js"></script>

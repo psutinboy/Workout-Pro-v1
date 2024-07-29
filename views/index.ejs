@@ -1,16 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <script>
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyD3V4xBP6kwM_-lXsMOVw0yNG0ujRJtYa8",
+        authDomain: "workout-pro-11ea5.firebaseapp.com",
+        databaseURL: "https://workout-pro-11ea5-default-rtdb.firebaseio.com",
+        projectId: "workout-pro-11ea5",
+        storageBucket: "workout-pro-11ea5.appspot.com",
+        messagingSenderId: "396511645726",
+        appId: "1:396511645726:web:68ac8e4efa228229331e0f",
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
     <script src="/js/main.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <div class="">
-        <h1>Welcome to the Mobile App</h1>
-        <p>Click the button below to get started</p>
+      <h1>Welcome to the Mobile App</h1>
+      <p>Click the button below to get started</p>
     </div>
     <%- include('partials/nav.ejs') %>
-</body>
+  </body>
 </html>
