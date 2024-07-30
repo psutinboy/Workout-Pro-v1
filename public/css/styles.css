@@ -6,4 +6,27 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
+  text-wrap: wrap;
+}
+
+.container {
+  text-align: center;
+  margin: 20px;
+}
+
+.workout-box {
+  background-color: #add8e6;
+  padding: 20px;
+  margin: 10px 0;
+  border-radius: 10px;
+}
+
+.workout-day {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.workout-type {
+  font-size: 1em;
 }

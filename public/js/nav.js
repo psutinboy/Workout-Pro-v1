@@ -20,3 +20,7 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+
+function goToCreateWorkoutPage() {
+    window.location.href = '/createWorkout';
+}

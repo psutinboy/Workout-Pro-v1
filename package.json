@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
-    "build": "nodemon app.js"
+    "build": "nodemon app.js --force"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +23,7 @@
     "http-errors": "^2.0.0",
     "livereload": "^0.9.3",
     "morgan": "^1.10.0",
+    "openai": "^4.53.2",
     "ws": "^8.17.0"
   },
   "devDependencies": {
