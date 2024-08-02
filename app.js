@@ -26,12 +26,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Define routes
 var indexRouter = require('./routes/routeIndex');
 var createWorkoutRouter = require('./routes/routeCreateWorkout');
-var aiRouter = require('./routes/ai'); // Add this line
 
 // Routes
 app.use('/', indexRouter);
 app.use('/createWorkout', createWorkoutRouter);
-app.use('/ai', aiRouter); // Add this line
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -46,7 +44,7 @@ app.use((err, req, res, next) => {
 
   // Render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('');
 });
 
 // Start server
