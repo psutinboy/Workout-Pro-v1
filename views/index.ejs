@@ -24,12 +24,17 @@
     </script>
     <script src="/js/main.js"></script>
     <script src="/js/ai.js"></script>
-</head>
-<body>
-  <div class="container">
-    <h1>Welcome back USER</h1>
-    <div id="workout-schedule"></div>
-  </div>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Welcome back USER</h1>
+      <% if (typeof workoutPlan !== 'undefined' && workoutPlan) { %>
+        <div id="workout-plan">
+          <h2>Your Workout Plan</h2>
+          <pre><%= workoutPlan %></pre>
+        </div>
+      <% } %>
+    </div>
     <%- include('partials/nav.ejs') %>
   </body>
 </html>
