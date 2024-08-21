@@ -13,6 +13,8 @@ body {
 .container {
   text-align: center;
   margin: 20px;
+  width: 90%;
+  padding-bottom: 60px;
 }
 
 .workout-box {

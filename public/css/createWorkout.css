@@ -12,8 +12,8 @@ body {
 .home {
     width: 32px;
     height: 32px;
-    margin-bottom: 5px;
-    padding: 1vw;
+    margin-top: 1.5vh;
+    margin-left: 1vh;
     position: absolute;
     top: 0;
     left: 0;
@@ -21,6 +21,10 @@ body {
 
 h1 {
     margin: 0 0 20px 0;
+    position: absolute;
+    top: 0;
+    margin-top: 2vw;
+    margin-left: 1vh;
 }
 
 .chat-container {
@@ -34,12 +38,21 @@ h1 {
     overflow-y: auto;
     max-height: 100vh;
     height: 70vh;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-height: 667px) { /* iPhone 8 height */
+    .chat-container {
+        height: 60vh; /* Adjust this value as needed */
+    }
 }
 
 .chat-bubble {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    margin-top: auto; /* Add this line */
 }
 
 .user {
@@ -104,7 +117,7 @@ h1 {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    display: inline-block; /* Add this line */
+    display: inline-block;
 }
 
 #next-button {

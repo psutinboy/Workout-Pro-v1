@@ -1,16 +1,27 @@
 const express = require("express");
 const router = express.Router();
 const OpenAI = require("openai");
+const { MongoClient } = require('mongodb');
+const uri = process.env.MONGODB_URI;
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-router.post("/generate-workout", async (req, res) => {
+// Middleware to ensure the user is authenticated
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+}
+
+router.post("/generate-workout", ensureAuthenticated, async (req, res) => {
   const userResponses = req.body;
 
-  const totalDays = parseInt(userResponses["workout days"]) + parseInt(userResponses["rest days"]);
-  const workoutDays = parseInt(userResponses["workout days"]);
+  const totalDays = parseInt(userResponses["workout days"]);
+  const workoutDays = parseInt(userResponses["workout days"]) - parseInt(userResponses["rest days"]);
   const restDays = parseInt(userResponses["rest days"]);
 
   const prompt = `
@@ -28,8 +39,7 @@ CRITICAL REQUIREMENTS (must be followed exactly):
 3. Rest Days: Include EXACTLY ${restDays} rest days.
 
 FORMAT REQUIREMENTS:
-1. Start your response with a summary line: "This plan includes ${workoutDays} workout days and ${restDays} rest days, totaling ${totalDays} days."
-2. For each day:
+1. For each day:
    - Start with the day name followed by a colon (e.g., "Day 1 (Monday): ").
    - Clearly state if it's a "Rest Day" or describe the workout focus.
    - For workout days, list 3-5 exercises with sets and reps.
@@ -59,9 +69,9 @@ Generate a concise, easy-to-read workout plan that strictly follows these guidel
   console.log("Generated prompt:", prompt);
 
   try {
-    const completion = await openai.completions.create({
-      model: "gpt-3.5-turbo-instruct-0914",
-      prompt: prompt,
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini-2024-07-18",
+      messages: [{ role: "system", content: prompt }],
       max_tokens: 1024,
       temperature: 0.5,
       top_p: 1,
@@ -70,18 +80,36 @@ Generate a concise, easy-to-read workout plan that strictly follows these guidel
 
     console.log("OpenAI API response:", completion);
 
-    const workoutPlan = completion.choices[0].text.trim();
+    const workoutPlan = completion.choices[0].message.content.trim();
     console.log("Generated workout plan:", workoutPlan);
-    res.render("index", { workoutPlan: workoutPlan });
+
+    // Connect to the MongoDB database
+    await client.connect();
+    const database = client.db("workout-Pro");
+    const collection = database.collection('workoutPlans');
+    await collection.insertOne({ userId: req.user._id, workoutPlan, createdAt: new Date() });
+
+    res.render("index", { user: req.user, workoutPlan: workoutPlan }); // Pass user object
   } catch (error) {
     console.error("Error:", error.message);
     res.status(500).json({ error: "Failed to generate workout plan" });
   }
 });
 
-// Other routes remain unchanged
-router.get("/", (req, res) => {
-  res.render("index");
+router.get("/", ensureAuthenticated, async (req, res) => {
+  try {
+    await client.connect();
+    const database = client.db('workout-Pro'); // Replace with your database name
+    const collection = database.collection('workoutPlans');
+    const latestWorkoutPlan = await collection.findOne({ userId: req.user._id }, { sort: { createdAt: -1 } });
+
+    console.log("Retrieved workout plan:", latestWorkoutPlan); // Debug log
+
+    res.render("index", { user: req.user, workoutPlan: latestWorkoutPlan ? latestWorkoutPlan.workoutPlan : "No workout plan available" }); // Pass user object
+  } catch (error) {
+    console.error("Error:", error.message);
+    res.status(500).json({ error: "Failed to retrieve workout plan" });
+  }
 });
 
 module.exports = router;

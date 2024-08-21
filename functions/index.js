@@ -17,3 +17,12 @@ const logger = require("firebase-functions/logger");
 //   logger.info("Hello logs!", {structuredData: true});
 //   response.send("Hello from Firebase!");
 // });
+
+const { MongoClient } = require('mongodb');
+const uri = process.env.MONGODB_URI; // Ensure you have this in your .env file
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+async function connectToDatabase() {
+  if (!client.isConnected()) await client.connect();
+  return client.db('yourDatabaseName'); // Replace with your database name
+}
