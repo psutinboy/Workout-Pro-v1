@@ -11,7 +11,7 @@ const openai = new OpenAI({
 
 // Middleware to ensure the user is authenticated
 function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
+  if (req.isAuthenticated() && req.session) {
     return next();
   }
   res.redirect('/login');
@@ -93,6 +93,8 @@ Generate a concise, easy-to-read workout plan that strictly follows these guidel
   } catch (error) {
     console.error("Error:", error.message);
     res.status(500).json({ error: "Failed to generate workout plan" });
+  } finally {
+    await client.close();
   }
 });
 
@@ -103,12 +105,14 @@ router.get("/", ensureAuthenticated, async (req, res) => {
     const collection = database.collection('workoutPlans');
     const latestWorkoutPlan = await collection.findOne({ userId: req.user._id }, { sort: { createdAt: -1 } });
 
-    console.log("Retrieved workout plan:", latestWorkoutPlan); // Debug log
+    //console.log("Retrieved workout plan:", latestWorkoutPlan); // Debug log
 
     res.render("index", { user: req.user, workoutPlan: latestWorkoutPlan ? latestWorkoutPlan.workoutPlan : "No workout plan available" }); // Pass user object
   } catch (error) {
     console.error("Error:", error.message);
     res.status(500).json({ error: "Failed to retrieve workout plan" });
+  } finally {
+    await client.close();
   }
 });
 

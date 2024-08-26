@@ -24,3 +24,7 @@ window.onclick = function(event) {
 function goToCreateWorkoutPage() {
     window.location.href = '/createWorkout';
 }
+
+function goToSettingsPage() {
+    window.location.href = '/settings';
+}

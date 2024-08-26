@@ -3,7 +3,7 @@ const router = express.Router();
 
 // Middleware to ensure the user is authenticated
 function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
+  if (req.isAuthenticated() && req.session) {
     return next();
   }
   res.redirect('/login');
