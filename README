@@ -1,10 +1,10 @@
-# **Workout Pro**
+ **Workout Pro**
 
-### **Description**
+ **Description**
 
 Workout Pro is a comprehensive workout planning application designed to help users create personalized workout plans based on their fitness goals, available time, and preferences. With an intuitive interface and robust backend, Workout Pro simplifies the process of setting up and following a workout routine, making it easier for users to stay motivated and achieve their fitness objectives.
 
-### **Table of Contents**
+ **Table of Contents**
 
 1. Installation Instructions  
 2. Usage  
@@ -12,16 +12,16 @@ Workout Pro is a comprehensive workout planning application designed to help use
 4. Credits  
 5. Contact Information
 
-### **Installation Instructions**
+ **Installation Instructions**
 
 To set up Workout Pro locally, follow these steps:
 
-#### **Prerequisites**
+ **Prerequisites**
 
 * Node.js (v14.0 or higher)  
 * MongoDB (local or cloud instance)
 
-#### **Steps**
+ **Steps**
 
 **Clone the Repository:**  
 bash  
@@ -54,7 +54,7 @@ Copy code
 
 4. The application will run on `http://localhost:3000`.
 
-### **Usage**
+ **Usage**
 
 After setting up the project, you can use the application to create personalized workout plans.
 
@@ -63,11 +63,11 @@ After setting up the project, you can use the application to create personalized
 * **Create a Workout Plan:** Answer a series of questions to generate a personalized workout plan based on your preferences.  
 * **View Your Plan:** Access your latest workout plan on the home page.
 
-### **License**
+ **License**
 
 This project is licensed under the MIT License. See the LICENSE file for more details.
 
-### **Credits**
+ **Credits**
 
 * **Libraries Used:**  
   * [Express](https://expressjs.com/)  
@@ -78,7 +78,7 @@ This project is licensed under the MIT License. See the LICENSE file for more de
 * **Contributors:**  
   * [psutinboy](https://github.com/psutinboy) 
 
-### **Contact Information**
+ **Contact Information**
 
 For any questions, suggestions, or issues, feel free to reach out:
 
