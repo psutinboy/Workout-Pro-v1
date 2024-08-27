@@ -20,7 +20,7 @@ router.get("/", ensureAuthenticated, (req, res) => {
 
 // Handle update information
 router.post("/update", ensureAuthenticated, async (req, res) => {
-  const { username, email, password } = req.body; // Remove name
+  const { username, email, password } = req.body;
   try {
     const user = await User.findById(req.user.id);
     if (!user) {

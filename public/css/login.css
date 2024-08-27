@@ -1,0 +1,73 @@
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Container for the login box */
+.login-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+}
+
+/* Header styling */
+.login-container h2 {
+    background-color: #999999;
+    color: #ffffff;
+    border-radius: 12px;
+    padding: 10px 0;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* Input field styling */
+.login-container input[type="text"],
+.login-container input[type="email"],
+.login-container input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Button styling */
+.login-container button {
+    background-color: #333333;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    margin-bottom: 2vh;
+}
+
+.login-container button:hover {
+    background-color: #555555;
+}
+
+/* Link styling */
+.login-container a {
+    display: block;
+    margin-top: 15px;
+    color: #181952;
+    font-size: 14px;
+}

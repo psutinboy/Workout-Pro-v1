@@ -61,6 +61,7 @@ CONTENT GUIDELINES:
 4. Additional Notes:
    - Do not include warm-up or cool-down instructions.
    - Avoid suggesting equipment unless the user's preferred workout type implies its use.
+   - make unique and engaging workout plans that keep the user motivated.
 
 IMPORTANT: Ensure your plan strictly adheres to the number of workout and rest days specified. Any deviation is unacceptable.
 
@@ -105,9 +106,10 @@ router.get("/", ensureAuthenticated, async (req, res) => {
     const collection = database.collection('workoutPlans');
     const latestWorkoutPlan = await collection.findOne({ userId: req.user._id }, { sort: { createdAt: -1 } });
 
-    //console.log("Retrieved workout plan:", latestWorkoutPlan); // Debug log
+    let workoutPlan = latestWorkoutPlan ? latestWorkoutPlan.workoutPlan : "No workout plan available\n\nClick plus to create one";
+    workoutPlan = workoutPlan.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // Replace **text** with <strong>text</strong>
 
-    res.render("index", { user: req.user, workoutPlan: latestWorkoutPlan ? latestWorkoutPlan.workoutPlan : "No workout plan available" }); // Pass user object
+    res.render("index", { user: req.user, workoutPlan: workoutPlan }); // Pass user object
   } catch (error) {
     console.error("Error:", error.message);
     res.status(500).json({ error: "Failed to retrieve workout plan" });

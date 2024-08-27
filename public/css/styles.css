@@ -8,6 +8,7 @@ body {
   align-items: center;
   text-align: center;
   text-wrap: wrap;
+  overflow-x: hidden;
 }
 
 .container {
@@ -15,6 +16,8 @@ body {
   margin: 20px;
   width: 90%;
   padding-bottom: 60px;
+  word-wrap: break-word; /* Allows long words to be broken and wrap to the next line */
+  word-break: break-all; /* Ensures that the text will break and wrap to the next line */
 }
 
 .workout-box {
@@ -36,4 +39,10 @@ body {
 
 .workout-type {
   font-size: 1em;
+}
+
+.workout-content {
+  white-space: pre-wrap; /* Preserves whitespace and wraps text */
+  word-wrap: break-word; /* Allows long words to be broken and wrap to the next line */
+  word-break: break-word; /* Ensures that the text will break and wrap to the next line */
 }

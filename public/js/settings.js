@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data.error) {
         console.error(data.error);
       } else {
-        document.getElementById('current-name').textContent = data.name;
+        document.getElementById('current-name').textContent = data.username;
         document.getElementById('current-email').textContent = data.email || 'No email added';
       }
     })

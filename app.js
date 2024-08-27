@@ -49,40 +49,41 @@ app.use(passport.session());
 app.use(flash());
 
 // Passport configuration
-passport.use(new LocalStrategy(async (username, password, done) => {
-  try {
-    console.log(`Attempting to authenticate user: ${username}`);
-    const user = await User.findOne({ username });
-    if (!user) {
-      console.log('Incorrect username.');
-      return done(null, false, { message: 'Incorrect username.' });
+passport.use(new LocalStrategy(
+  async (username, password, done) => {
+    try {
+      const lowerCaseUsername = username.toLowerCase(); // Convert to lowercase
+      const user = await User.findOne({ username: lowerCaseUsername });
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      const isMatch = await user.comparePassword(password);
+      if (!isMatch) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    } catch (err) {
+      return done(err);
     }
-    const isMatch = await user.comparePassword(password);
-    if (!isMatch) {
-      console.log('Incorrect password.');
-      return done(null, false, { message: 'Incorrect password.' });
-    }
-    console.log('User authenticated successfully.');
-    return done(null, user);
-  } catch (err) {
-    return done(err);
   }
-}));
+));
 
 passport.serializeUser((user, done) => {
-  console.log('Serializing user:', user.id);
   done(null, user.id);
 });
 
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await User.findById(id);
-    console.log('Deserializing user:', user);
     done(null, user);
   } catch (err) {
     done(err);
   }
 });
+
+// Middleware setup
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Define routes
 const indexRouter = require('./routes/routeIndex');

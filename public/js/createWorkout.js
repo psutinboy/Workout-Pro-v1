@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
       answerInput.value = "";
       appendMessage(questions[currentQuestionIndex], "bot");
     } else {
+      showLoadingPopup();
       submitResponses();
     }
   }
@@ -69,18 +70,20 @@ document.addEventListener("DOMContentLoaded", function () {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.workoutPlan) {
-          window.location.href = "/";
-        }
+        console.log("Response from server:", data); // Log the response
+        // No need to update the popup message
       })
-      .catch((error) => console.error("Error:", error));
+      .catch((error) => {
+        console.error("Error:", error);
+        // No need to update the popup message
+      });
   }
 
   function appendMessage(text, sender) {
     const messageElement = document.createElement("div");
     messageElement.className = `chat-bubble ${sender}`;
     messageElement.innerHTML = `
-      <div class="avatar">${sender === "user" ? "AI" : "AI"}</div>
+      <div class="avatar">${sender === "user" ? "User" : "AI"}</div>
       <div class="message">${text}</div>
     `;
     chatContainer.appendChild(messageElement);
@@ -145,38 +148,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
   askNextQuestion();
 
-  // Define the function to show the popup
-  function showPopup() {
-    alert("You have answered the last question!");
-  }
+  function showLoadingPopup() {
+    const popup = document.createElement("div");
+    popup.id = "loading-popup";
+    popup.innerHTML = `
+      <div class="popup-content">
+        <div class="loading-animation"></div>
+        <p>Generating your workout plan...</p>
+      </div>
+    `;
+    document.body.appendChild(popup);
 
-  // Function to handle different cases
-  function handleCase(caseNumber) {
-    switch (caseNumber) {
-      case 1:
-        console.log("Handling case 1");
-        // Your logic for case 1
-        break;
-      case 2:
-        console.log("Handling case 2");
-        // Your logic for case 2
-        break;
-      case 3:
-        console.log("Handling case 3");
-        // Your logic for case 3
-        showPopup(); // Show the popup after handling case 3
-        break;
-      default:
-        console.log("Handling default case");
-        // Your logic for default case
-        break;
-    }
-  }
-
-  // Example function to simulate answering questions
-  function answerQuestion(answer) {
-    handleAnswer(currentQuestionIndex, answer);
-    currentQuestionIndex++;
+    // Wait for 10 seconds and then redirect to the home screen
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 10000);
   }
 });
 
