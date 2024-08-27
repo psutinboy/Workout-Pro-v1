@@ -1,4 +1,4 @@
- **Workout Pro**
+# Workout Pro
 
 ## Description
 
