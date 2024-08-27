@@ -4,12 +4,10 @@ function goToHomePage() {
 
 function toggleModal() {
     const modal = document.getElementById('modal');
-    const plusIcon = document.querySelector('.plus-icon');
 
     if (modal.style.display === "flex") {
         modal.style.display = "none";
     } else {
-        const rect = plusIcon.getBoundingClientRect();
         modal.style.display = "flex";
     }
 }

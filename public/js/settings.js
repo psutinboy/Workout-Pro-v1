@@ -42,9 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const result = await response.json();
       console.log('Response:', result); // Log response
       if (result.success) {
-        alert(result.message);
+        alert('Success: ' + result.message);
       } else {
-        alert(result.message);
+        alert('Error: ' + result.message);
       }
     } catch (error) {
       console.error('Error:', error); // Log any errors

@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const answerInput = document.getElementById("answer-input");
   const nextButton = document.getElementById("next-button");
   const chatContainer = document.getElementById("chat-container");
-  const workoutSchedule = document.getElementById("workout-schedule");
 
   const questions = [
     "What is your age?",
@@ -88,62 +87,6 @@ document.addEventListener("DOMContentLoaded", function () {
     `;
     chatContainer.appendChild(messageElement);
     chatContainer.scrollTop = chatContainer.scrollHeight;
-  }
-
-  function orderWorkoutPlanByCurrentDay(workoutPlan) {
-    const daysOfWeek = [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday",
-    ];
-    const currentDay = new Date().toLocaleDateString("en-US", {
-      weekday: "long",
-    });
-    const workoutDays = workoutPlan.split("\n").filter(Boolean);
-
-    const dayMap = {};
-    let currentDayName = null;
-
-    // Build a map of days with workouts
-    workoutDays.forEach((line) => {
-      const trimmedLine = line.trim();
-      const day = daysOfWeek.find((d) => trimmedLine.startsWith(d));
-      if (day) {
-        currentDayName = day;
-        dayMap[currentDayName] = [];
-      }
-      if (currentDayName) {
-        dayMap[currentDayName].push(trimmedLine);
-      }
-    });
-
-    // Reorder days starting from the current day
-    const startIndex = daysOfWeek.indexOf(currentDay);
-    const orderedPlan = [];
-
-    for (let i = 0; i < daysOfWeek.length; i++) {
-      const dayIndex = (startIndex + i) % daysOfWeek.length;
-      const dayName = daysOfWeek[dayIndex];
-      if (dayMap[dayName]) {
-        orderedPlan.push(...dayMap[dayName]);
-      }
-    }
-
-    return orderedPlan;
-  }
-
-  function displayWorkoutPlan(orderedPlan) {
-    workoutSchedule.innerHTML = ""; // Clear existing content
-    orderedPlan.forEach((line) => {
-      const workoutDiv = document.createElement("div");
-      workoutDiv.className = "workout-day";
-      workoutDiv.textContent = line;
-      workoutSchedule.appendChild(workoutDiv);
-    });
   }
 
   askNextQuestion();
