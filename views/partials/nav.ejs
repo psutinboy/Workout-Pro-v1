@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="/css/nav.css">
+
+<!-- Navbar -->
 <nav class="navbar fixed-bottom">
     <div class="nav-item">
         <img src="/images/home.png" alt="Home" class="home" onclick="goToHomePage()">
@@ -13,13 +15,30 @@
     </div>
 </nav>
 
+<!-- Modal -->
 <div id="modal" class="modal">
     <div class="modal-content">
         <span class="close-button" onclick="toggleModal()">&times;</span>
-        <button class="modal-option">Upload File</button>
-        <button class="modal-option">Take Picture</button>
+        <button class="modal-option">Upload File (coming soon!)</button>
+        <button class="modal-option">Take Picture (coming soon!)</button>
         <button class="modal-option" onclick="goToCreateWorkoutPage()">Create New Workout</button>
     </div>
+</div>
+
+<!-- Hamburger Menu -->
+<div class="menu-icon" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+
+<div id="menuOverlay" class="menu-overlay"></div>
+
+<div id="hamburgerMenu" class="hamburger-menu">
+    <br>
+    <button onclick="goToPastWorkoutsPage()">Past Workouts</button>
+    <button onclick="goToChatPage()">Chat with your AI Workout Professional</button>
+    <button onclick="goToProgressTrackerPage()">Progress Tracker</button>
 </div>
 
 <script src="/js/nav.js"></script>

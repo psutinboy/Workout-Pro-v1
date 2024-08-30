@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Past Workouts</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Past Workouts</h1>
+      <div class="workouts-container">
+        <% if (workouts.length > 0) { %> <% workouts.forEach(workout => { %>
+        <div class="workout">
+          <h2><%= workout.title %></h2>
+          <p><%= workout.description %></p>
+          <p>Date: <%= workout.date %></p>
+        </div>
+        <% }) %> <% } else { %>
+        <p>No past workouts found.</p>
+        <% } %>
+      </div>
+    </div>
+    <%- include('partials/nav.ejs') %>
+  </body>
+</html>

@@ -46,3 +46,19 @@ body {
   word-wrap: break-word; /* Allows long words to be broken and wrap to the next line */
   word-break: break-word; /* Ensures that the text will break and wrap to the next line */
 }
+
+.workout-container {
+  text-align: center;
+  margin: 20px;
+  width: 90%;
+  padding-bottom: 60px;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.workout {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
