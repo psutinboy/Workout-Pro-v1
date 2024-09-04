@@ -20,7 +20,10 @@ const PORT = process.env.PORT || 3000;
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connected to MongoDB'))
+  .then(() => {
+    console.log('Connected to MongoDB');
+    app.locals.database = mongoose.connection.db; // Store the database connection in app.locals
+  })
   .catch(err => console.error('Failed to connect to MongoDB', err));
 
 // Set EJS as the templating engine
@@ -90,12 +93,14 @@ const indexRouter = require('./routes/routeIndex');
 const createWorkoutRouter = require('./routes/routeCreateWorkout');
 const signupRouter = require('./routes/routeSignup');
 const settingsRouter = require('./routes/routeSettings');
+const pastWorkoutsRouter = require('./routes/routePastWorkouts');
 
 // Routes
 app.use('/', indexRouter);
 app.use('/createWorkout', createWorkoutRouter);
 app.use('/signup', signupRouter);
 app.use('/settings', settingsRouter);
+app.use('/pastWorkouts', pastWorkoutsRouter);
 
 // Login route
 app.get('/login', (req, res) => {
