@@ -19,7 +19,7 @@ router.get('/', ensureAuthenticated, async (req, res) => {
       throw new Error('Database not initialized');
     }
 
-    const workouts = await req.app.locals.database.collection('workoutPlans').find({ userId: userId }).toArray();
+    const workouts = await req.app.locals.database.collection('workoutPlans').find({ userId: userId, createdBy: userId }).toArray();
 
     res.render('pastWorkouts', { workouts: workouts });
   } catch (error) {
