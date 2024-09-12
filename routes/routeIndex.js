@@ -1,9 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const OpenAI = require("openai");
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require("mongodb"); // Add ObjectId here
 const uri = process.env.MONGODB_URI;
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+const client = new MongoClient(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -14,14 +17,16 @@ function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated() && req.session) {
     return next();
   }
-  res.redirect('/login');
+  res.redirect("/login");
 }
 
 router.post("/generate-workout", ensureAuthenticated, async (req, res) => {
   const userResponses = req.body;
 
   const totalDays = parseInt(userResponses["workout days"]);
-  const workoutDays = parseInt(userResponses["workout days"]) - parseInt(userResponses["rest days"]);
+  const workoutDays =
+    parseInt(userResponses["workout days"]) -
+    parseInt(userResponses["rest days"]);
   const restDays = parseInt(userResponses["rest days"]);
 
   const prompt = `
@@ -87,8 +92,24 @@ Generate a concise, easy-to-read workout plan that strictly follows these guidel
     // Connect to the MongoDB database
     await client.connect();
     const database = client.db("workout-Pro");
-    const collection = database.collection('workoutPlans');
-    await collection.insertOne({ userId: req.user._id, workoutPlan, createdAt: new Date() });
+    const collection = database.collection("workoutPlans");
+
+    // Set all existing workouts for this user to not current
+    await collection.updateMany(
+      { userId: req.user._id },
+      { $set: { isCurrent: false } }
+    );
+
+    // Insert the new workout as current
+    const result = await collection.insertOne({
+      userId: req.user._id,
+      workoutPlan,
+      createdAt: new Date(),
+      isCurrent: true,
+    });
+
+    console.log("Workout saved:", { userId: req.user._id, workoutPlan });
+    console.log("User ID when saving workout:", req.user._id);
 
     res.render("index", { user: req.user, workoutPlan: workoutPlan }); // Pass user object
   } catch (error) {
@@ -99,17 +120,64 @@ Generate a concise, easy-to-read workout plan that strictly follows these guidel
   }
 });
 
+router.post("/setCurrentWorkout", ensureAuthenticated, async (req, res) => {
+  try {
+    await client.connect();
+    const database = client.db("workout-Pro");
+    const collection = database.collection("workoutPlans");
+
+    const workoutId = req.body.workoutId;
+    console.log("Received workoutId:", workoutId);
+
+    if (!ObjectId.isValid(workoutId)) {
+      throw new Error("Invalid workout ID");
+    }
+
+    const objectId = new ObjectId(workoutId);
+    const workout = await collection.findOne({ _id: objectId });
+
+    if (workout) {
+      await collection.updateOne(
+        { _id: objectId },
+        { $set: { isCurrent: true } }
+      );
+
+      // Set isCurrent to false for all other workouts
+      await collection.updateMany(
+        { _id: { $ne: objectId }, userId: req.user._id },
+        { $set: { isCurrent: false } }
+      );
+    } else {
+      throw new Error("Workout not found");
+    }
+
+    res.redirect("/");
+  } catch (error) {
+    console.error("Error setting current workout:", error);
+    res
+      .status(500)
+      .json({ error: "Failed to set current workout", details: error.message });
+  } finally {
+    await client.close();
+  }
+});
+
 router.get("/", ensureAuthenticated, async (req, res) => {
   try {
     await client.connect();
-    const database = client.db('workout-Pro'); // Replace with your database name
-    const collection = database.collection('workoutPlans');
-    const latestWorkoutPlan = await collection.findOne({ userId: req.user._id }, { sort: { createdAt: -1 } });
+    const database = client.db("workout-Pro");
+    const collection = database.collection("workoutPlans");
+    const currentWorkout = await collection.findOne({
+      userId: req.user._id,
+      isCurrent: true,
+    });
 
-    let workoutPlan = latestWorkoutPlan ? latestWorkoutPlan.workoutPlan : "No workout plan available\n\nClick plus to create one";
-    workoutPlan = workoutPlan.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // Replace **text** with <strong>text</strong>
+    let workoutPlan = currentWorkout
+      ? currentWorkout.workoutPlan
+      : "No workout plan available\n\nClick plus to create one";
+    workoutPlan = workoutPlan.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
 
-    res.render("index", { user: req.user, workoutPlan: workoutPlan }); // Pass user object
+    res.render("index", { user: req.user, workoutPlan: workoutPlan });
   } catch (error) {
     console.error("Error:", error.message);
     res.status(500).json({ error: "Failed to retrieve workout plan" });

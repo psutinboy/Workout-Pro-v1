@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     "What is your age?",
     "What is your fitness goal?",
     "How many days a week can you work out?",
-    "How many rest days do you want?",
+    "Out of the days you work out, how many rest days do you want?",
     "What is your preferred workout type (e.g., strength, cardio)?",
   ];
 

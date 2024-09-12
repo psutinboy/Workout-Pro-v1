@@ -56,9 +56,71 @@ body {
   word-break: break-all;
 }
 
+.workouts-container button {
+  width: fit-content;
+  height: fit-content;
+  border-radius: 5px;
+  border: 1px solid black;
+  padding: 0.5rem;
+}
+
+.workouts-container form {
+  margin-top: -20px;
+  margin-bottom: -20px;
+  display: flex;
+  justify-content: flex-start;
+}
+
 .workout {
   white-space: pre-wrap;
   word-wrap: break-word;
   word-break: break-word;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 20px;
 }
 
+.workout h2 {
+  color: #333;
+  margin-top: 0;
+}
+
+.workout p {
+  margin: 5px 0;
+}
+
+.delete-btn {
+  background-color: #f44336;
+  color: white;
+  border: 1px solid #f44336 !important;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.inline-form {
+  display: inline-block;
+}
+
+.set-current-btn, .delete-btn, .edit-btn {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.edit-btn {
+  background-color: #2196F3;
+  color: white;
+}

@@ -10,15 +10,43 @@
     <div class="container">
       <h1>Past Workouts</h1>
       <div class="workouts-container">
-        <% if (workouts.length > 0) { %>
-          <% workouts.forEach(workout => { %>
-            <div class="workout">
-              <h2><%= workout.title || 'Untitled Workout' %></h2>
-              <p><%= workout.description || 'No description available.' %></p>
-              <p>Date: <%= workout.createdAt.toDateString() %></p>
-            </div>
-          <% }) %>
-        <% } else { %>
+        <% if (workouts.length > 0) { %> <% workouts.forEach(workout => { %>
+        <div class="workout">
+          <p><%= workout.description %></p>
+          <p>Date Created: <%= workout.date %></p>
+          <div class="button-container">
+            <form action="/setCurrentWorkout" method="POST" class="inline-form">
+              <input
+                type="hidden"
+                name="workoutId"
+                value="<%= workout._id.toString() %>"
+              />
+              <button type="submit" class="set-current-btn">Set as Current Workout</button>
+            </form>
+            <form
+              action="/pastWorkouts/deleteWorkout"
+              method="POST"
+              class="inline-form"
+            >
+              <input
+                type="hidden"
+                name="workoutId"
+                value="<%= workout._id.toString() %>"
+              />
+              <button type="submit" class="delete-btn">Delete Workout</button>
+            </form>
+            <a
+              href="/pastWorkouts/editWorkout/<%= workout._id.toString() %>"
+              class="edit-btn"
+            ><img
+                src="/images/edit.png"
+                alt="Edit Workout"
+                width="22"
+                height="22"
+            /></a>
+          </div>
+        </div>
+        <% }) %> <% } else { %>
         <p>No past workouts found.</p>
         <% } %>
       </div>

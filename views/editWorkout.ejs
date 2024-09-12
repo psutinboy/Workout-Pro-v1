@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Workout</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/edit.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Workout</h1>
+        <form action="/pastWorkouts/updateWorkout/<%= workout._id.toString() %>" method="POST">
+            <textarea name="workoutPlan" rows="10" cols="50"><%= workout.workoutPlan %></textarea>
+            <button type="submit">Update Workout</button>
+        </form>
+        <a href="/pastWorkouts">Back to Past Workouts</a>
+    </div>
+    <%- include('partials/nav.ejs') %>
+</body>
+</html>

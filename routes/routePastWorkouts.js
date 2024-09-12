@@ -1,7 +1,8 @@
 const express = require('express');
-const { ObjectId } = require('mongodb');
-
+const { MongoClient, ObjectId } = require('mongodb'); // Add ObjectId here
 const router = express.Router();
+const uri = process.env.MONGODB_URI;
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Middleware function to ensure authentication
 function ensureAuthenticated(req, res, next) {
@@ -13,30 +14,112 @@ function ensureAuthenticated(req, res, next) {
 
 router.get('/', ensureAuthenticated, async (req, res) => {
   try {
-    const userId = req.user._id.toString(); // Convert ObjectId to string
-    console.log('User ID:', userId); // Add this line to log the user ID
+    await client.connect();
+    const database = client.db("workout-Pro");
+    const collection = database.collection('workoutPlans');
 
-    if (!userId || typeof userId !== 'string' || userId.length !== 24) {
-      throw new Error('Invalid user ID');
-    }
+    const userId = req.user._id;
+    console.log('User ID:', userId);
 
-    const objectId = ObjectId.createFromHexString(userId);
-    console.log('Fetching user with ID:', objectId);
-
-    if (!req.app.locals.database) {
-      throw new Error('Database not initialized');
-    }
-
-    const query = { userId: objectId };
+    const query = { userId: new ObjectId(userId) };
     console.log('Database query:', query);
 
-    const workouts = await req.app.locals.database.collection('workoutPlans').find(query).toArray();
-    console.log('Fetched workouts:', workouts);
+    // Sort the workouts by createdAt field in descending order
+    const workouts = await collection.find(query).sort({ createdAt: -1 }).toArray();
 
-    res.render('pastWorkouts', { workouts: workouts });
+    if (workouts.length === 0) {
+      console.log('No workouts found for user');
+    }
+
+    // Map the workouts to include title, description, and formatted date
+    const formattedWorkouts = workouts.map(workout => ({
+      _id: workout._id,
+      title: workout.title || 'Untitled Workout',
+      description: workout.workoutPlan || 'No description available.',
+      date: workout.createdAt ? new Date(workout.createdAt).toDateString() : 'Date not available'
+    }));
+
+    res.render('pastWorkouts', { workouts: formattedWorkouts });
   } catch (error) {
     console.error('Error fetching past workouts:', error);
     res.status(500).send('Internal Server Error');
+  } finally {
+    await client.close();
+  }
+});
+
+router.post('/deleteWorkout', ensureAuthenticated, async (req, res) => {
+  try {
+    await client.connect();
+    const database = client.db("workout-Pro");
+    const collection = database.collection('workoutPlans');
+
+    const workoutId = req.body.workoutId;
+    const result = await collection.deleteOne({ _id: new ObjectId(workoutId) });
+
+    if (result.deletedCount === 1) {
+      req.flash('success', 'Workout deleted successfully');
+    } else {
+      req.flash('error', 'Failed to delete workout');
+    }
+
+    res.redirect('/pastWorkouts');
+  } catch (error) {
+    console.error('Error deleting workout:', error);
+    req.flash('error', 'An error occurred while deleting the workout');
+    res.redirect('/pastWorkouts');
+  } finally {
+    await client.close();
+  }
+});
+
+// Add this new route
+router.get('/editWorkout/:id', ensureAuthenticated, async (req, res) => {
+  try {
+    await client.connect();
+    const database = client.db("workout-Pro");
+    const collection = database.collection('workoutPlans');
+
+    const workoutId = req.params.id;
+    const workout = await collection.findOne({ _id: new ObjectId(workoutId) });
+
+    if (!workout) {
+      req.flash('error', 'Workout not found');
+      return res.redirect('/pastWorkouts');
+    }
+
+    res.render('editWorkout', { workout });
+  } catch (error) {
+    console.error('Error fetching workout for edit:', error);
+    req.flash('error', 'An error occurred while fetching the workout');
+    res.redirect('/pastWorkouts');
+  } finally {
+    await client.close();
+  }
+});
+
+router.post('/updateWorkout/:id', ensureAuthenticated, async (req, res) => {
+  try {
+    await client.connect();
+    const database = client.db("workout-Pro");
+    const collection = database.collection('workoutPlans');
+
+    const workoutId = req.params.id;
+    const { workoutPlan } = req.body;
+
+    await collection.updateOne(
+      { _id: new ObjectId(workoutId) },
+      { $set: { workoutPlan: workoutPlan } }
+    );
+
+    req.flash('success', 'Workout updated successfully');
+    res.redirect('/pastWorkouts');
+  } catch (error) {
+    console.error('Error updating workout:', error);
+    req.flash('error', 'An error occurred while updating the workout');
+    res.redirect('/pastWorkouts');
+  } finally {
+    await client.close();
   }
 });
 
