@@ -12,7 +12,10 @@ router.post('/login', async (req, res, next) => {
       req.flash('error', 'Invalid username or password.');
       return res.redirect('/login');
     }
+    console.log("User found:", user);
+    console.log("Password to compare:", password);
     const isMatch = await user.comparePassword(password);
+    console.log("Password comparison result for user:", user.username, "isMatch:", isMatch);
     if (!isMatch) {
       req.flash('error', 'Invalid username or password.');
       return res.redirect('/login');

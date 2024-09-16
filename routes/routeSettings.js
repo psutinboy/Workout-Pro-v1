@@ -32,14 +32,29 @@ router.post("/update", ensureAuthenticated, async (req, res) => {
     user.username = username || user.username;
     user.email = email || user.email;
     if (password) {
-      const salt = await bcrypt.genSalt(10);
-      user.password = await bcrypt.hash(password, salt);
+      console.log("New password before hashing:", password);
+      user.password = password; // Assign the plain password
+      console.log("New password after hashing:", user.password);
     }
 
     // Save the user
     await user.save();
-    req.flash("success", "Information updated successfully.");
-    res.redirect("/settings");
+    console.log("User saved with new password:", user.password);
+
+    // Verify the saved password
+    const updatedUser = await User.findById(req.user.id);
+    console.log("Password in database after save:", updatedUser.password);
+
+    // Update session
+    req.login(user, (err) => {
+      if (err) {
+        console.error("Error updating session:", err);
+        req.flash("error", "An error occurred. Please try again.");
+        return res.redirect("/settings");
+      }
+      req.flash("success", "Information updated successfully.");
+      res.redirect("/settings");
+    });
   } catch (err) {
     console.error(err);
     req.flash("error", "An error occurred. Please try again.");
