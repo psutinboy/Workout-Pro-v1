@@ -1,0 +1,101 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #2c3e50;
+}
+
+#game-container {
+    background-color: #34495e;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+}
+
+#dealer-hand, #player-hand {
+    margin-bottom: 20px;
+}
+
+#dealer-cards, #player-cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 80px;
+    height: 120px;
+    background-color: white;
+    border-radius: 5px;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: black;
+}
+
+button {
+    font-size: 16px;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+#message {
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#chip-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.chip {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid gold;
+    margin: 0 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.chip[data-value="500"] { background-color: purple; color: white; }
+.chip[data-value="1000"] { background-color: orange; color: black; }
+.chip[data-value="5000"] { background-color: gray; color: white; }
+.chip[data-value="10000"] { background-color: green; color: white; }
+
+#clear-bet, #place-bet-button {
+    font-size: 16px;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+#clear-bet { background-color: red; color: white; }
+#place-bet-button { background-color: blue; color: white; }
+
+#home-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    z-index: 1000;
+}
+
+#home-button:hover {
+    background-color: #45a049;
+}

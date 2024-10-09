@@ -3,6 +3,8 @@ const router = express.Router();
 const User = require("../models/user");
 const passport = require("passport");
 const bcrypt = require("bcrypt");
+const packageJson = require("../package.json"); // Add this line
+const path = require("path"); // Add this line
 
 // Middleware to ensure the user is authenticated
 function ensureAuthenticated(req, res, next) {
@@ -15,7 +17,11 @@ function ensureAuthenticated(req, res, next) {
 
 // Render settings page
 router.get("/", ensureAuthenticated, (req, res) => {
-  res.render("settings", { user: req.user, message: req.flash("success") });
+  res.render("settings", {
+    user: req.user,
+    message: req.flash("success"),
+    version: packageJson.version, // Add this line
+  });
 });
 
 // Handle update information
@@ -88,6 +94,12 @@ router.get("/user", ensureAuthenticated, async (req, res) => {
     console.error(error);
     res.status(500).send("Error fetching user data");
   }
+});
+
+// Blackjack easter egg route
+router.get("/blackjack", ensureAuthenticated, (req, res) => {
+  console.log("Blackjack route hit"); // Add this line
+  res.sendFile(path.join(__dirname, "../public/blackjack/index.html"));
 });
 
 module.exports = router;

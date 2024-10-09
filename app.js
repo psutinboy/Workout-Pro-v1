@@ -47,6 +47,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/blackjack', express.static(path.join(__dirname, 'public/blackjack')));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
@@ -94,6 +95,7 @@ const createWorkoutRouter = require('./routes/routeCreateWorkout');
 const signupRouter = require('./routes/routeSignup');
 const settingsRouter = require('./routes/routeSettings');
 const pastWorkoutsRouter = require('./routes/routePastWorkouts');
+const chatRouter = require('./routes/routeChat'); // Update this line
 
 // Routes
 app.use('/', indexRouter);
@@ -101,6 +103,7 @@ app.use('/createWorkout', createWorkoutRouter);
 app.use('/signup', signupRouter);
 app.use('/settings', settingsRouter);
 app.use('/pastWorkouts', pastWorkoutsRouter);
+app.use('/chat', chatRouter);
 
 // Login route
 app.get('/login', (req, res) => {
@@ -138,5 +141,8 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+// Remove or comment out this line as it's no longer needed
+// app.use('/api/chat', chatRoutes);
 
 module.exports = app;

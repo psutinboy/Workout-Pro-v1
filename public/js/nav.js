@@ -50,7 +50,7 @@ function goToPastWorkoutsPage() {
 }
 
 function goToChatPage() {
-  window.location.href = "/chat";
+  window.location.href = '/chat';
 }
 
 function goToProgressTrackerPage() {
