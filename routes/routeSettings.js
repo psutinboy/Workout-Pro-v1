@@ -96,10 +96,4 @@ router.get("/user", ensureAuthenticated, async (req, res) => {
   }
 });
 
-// Blackjack easter egg route
-router.get("/blackjack", ensureAuthenticated, (req, res) => {
-  console.log("Blackjack route hit"); // Add this line
-  res.sendFile(path.join(__dirname, "../public/blackjack/index.html"));
-});
-
 module.exports = router;
