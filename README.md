@@ -26,7 +26,7 @@ To set up Workout Pro locally, follow these steps:
 
 1. **Clone the Repository:**
 ```bash
-git clone https://github.com/yourusername/workout-pro.git
+git clone https://github.com/psutinboy/workout-pro.git
 cd workout-pro
 ```
 
