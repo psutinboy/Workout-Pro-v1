@@ -11,15 +11,17 @@
     <link rel="apple-touch-icon-precomposed" href="/images/workout-pro-logo.png" />
   </head>
   <body>
-    <div class="container">
-      <h1>Welcome, <%= user.username %></h1>
-      <% if (typeof workoutPlan !== 'undefined' && workoutPlan) { %>
-      <div id="workout-plan">
-        <h2>Your Workout Plan</h2>
-        <div class="workout-content"><%- workoutPlan %></div>
+    <div class="page-wrapper">
+      <div class="container">
+        <h1>Welcome, <%= user.username %></h1>
+        <% if (typeof workoutPlan !== 'undefined' && workoutPlan) { %>
+        <div id="workout-plan">
+          <h2>Your Workout Plan</h2>
+          <div class="workout-content"><%- workoutPlan %></div>
+        </div>
+        <% } %>
       </div>
-      <% } %>
+      <%- include('partials/nav.ejs') %>
     </div>
-    <%- include('partials/nav.ejs') %>
   </body>
 </html>

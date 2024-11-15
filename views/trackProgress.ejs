@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Track Workout Progress</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/trackProgress.css" />
+    <!-- Add Select2 CSS and JS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <div class="container">
+        <h1>Track Your Workout</h1>
+
+        <form id="trackProgressForm" class="progress-form">
+          <!-- Basic Workout Info -->
+          <div class="form-section">
+            <h2>Workout Details</h2>
+            <div class="form-group">
+              <label for="workoutDate">Date</label>
+              <input type="date" id="workoutDate" name="workoutDate" required>
+            </div>
+            <div class="form-group">
+              <label for="duration">Duration (minutes)</label>
+              <input type="number" id="duration" name="duration" min="1" required>
+            </div>
+          </div>
+
+          <!-- Exercise Tracking -->
+          <div class="form-section">
+            <h2>Exercise Details</h2>
+            <div id="exerciseEntries">
+              <div class="exercise-entry">
+                <div class="form-group">
+                  <label for="exerciseName">Exercise</label>
+                  <select name="exercises[0][name]" required>
+                    <option value="">Select Exercise</option>
+                    <option value="benchPress">Bench Press</option>
+                    <option value="inclineBenchPress">Incline Bench Press</option>
+                    <option value="declineBenchPress">Decline Bench Press</option>
+                    <option value="chestFly">Chest Fly</option>
+                    <option value="pushUps">Push-Ups</option>
+                    <option value="chestDips">Dips (Chest)</option>
+                    <option value="dumbbellPullover">Dumbbell Pullover</option>
+                    <option value="pecDeck">Pec Deck Machine</option>
+                    
+                    <!-- Back -->
+                    <option value="deadlift">Deadlift</option>
+                    <option value="pullUp">Pull-Up</option>
+                    <option value="latPulldown">Lat Pulldown</option>
+                    <option value="barbellRow">Barbell Row</option>
+                    <option value="dumbbellRow">Dumbbell Row</option>
+                    <option value="tBarRow">T-Bar Row</option>
+                    <option value="cableRow">Cable Row</option>
+                    <option value="straightArmPulldown">Straight Arm Pulldown</option>
+                    
+                    <!-- Legs -->
+                    <option value="squat">Squat</option>
+                    <option value="frontSquat">Front Squat</option>
+                    <option value="bulgarianSplitSquat">Bulgarian Split Squat</option>
+                    <option value="conventionalDeadlift">Deadlift (Conventional)</option>
+                    <option value="romanianDeadlift">Deadlift (Romanian)</option>
+                    <option value="sumoDeadlift">Deadlift (Sumo)</option>
+                    <option value="legPress">Leg Press</option>
+                    <option value="walkingLunges">Walking Lunges</option>
+                    <option value="stepUps">Step-Ups</option>
+                    <option value="legExtension">Leg Extension</option>
+                    <option value="legCurl">Leg Curl</option>
+                    <option value="calfRaises">Calf Raises</option>
+                    <option value="gluteBridge">Glute Bridge / Hip Thrust</option>
+                    
+                    <!-- Shoulders -->
+                    <option value="overheadPress">Overhead Press</option>
+                    <option value="arnoldPress">Arnold Press</option>
+                    <option value="lateralRaise">Lateral Raise</option>
+                    <option value="frontRaise">Front Raise</option>
+                    <option value="rearDeltFly">Rear Delt Fly</option>
+                    <option value="uprightRow">Upright Row</option>
+                    <option value="shrugs">Shrugs</option>
+                    <option value="facePulls">Face Pulls</option>
+                    
+                    <!-- Arms -->
+                    <option value="barbellCurl">Barbell Curl</option>
+                    <option value="dumbbellCurl">Dumbbell Curl</option>
+                    <option value="hammerCurl">Hammer Curl</option>
+                    <option value="preacherCurl">Preacher Curl</option>
+                    <option value="concentrationCurl">Concentration Curl</option>
+                    <option value="cableCurl">Cable Curl</option>
+                    <option value="chinUps">Chin-Ups</option>
+                    <option value="tricepDips">Tricep Dips</option>
+                    <option value="skullCrushers">Skull Crushers</option>
+                    <option value="closeGripBench">Close-Grip Bench Press</option>
+                    <option value="overheadTricepExtension">Overhead Tricep Extension</option>
+                    <option value="cablePushdowns">Cable Pushdowns</option>
+                    <option value="kickbacks">Kickbacks</option>
+                    
+                    <!-- Olympic/Power -->
+                    <option value="cleanAndJerk">Clean and Jerk</option>
+                    <option value="snatch">Snatch</option>
+                    <option value="powerClean">Power Clean</option>
+                    <option value="pushPress">Push Press</option>
+                    <option value="farmersWalk">Farmer's Walk</option>
+                    <option value="kettlebellSwings">Kettlebell Swings</option>
+                    <option value="landminePress">Landmine Press</option>
+                    <option value="landmineRow">Landmine Row</option>
+                    <option value="pauseBenchPress">Pause Bench Press</option>
+                    <option value="boxSquats">Box Squats</option>
+                    <option value="rackPulls">Rack Pulls</option>
+                    <option value="deficitDeadlift">Deficit Deadlift</option>
+                    
+                    <!-- Core -->
+                    <option value="hangingLegRaise">Hanging Leg Raise</option>
+                    <option value="cableCrunch">Cable Crunch</option>
+                    <option value="russianTwists">Russian Twists</option>
+                    <option value="plank">Plank</option>
+                    <option value="declineSitUps">Decline Sit-Ups</option>
+                    <option value="abWheelRollout">Ab Wheel Rollout</option>
+                    <option value="sidePlank">Side Plank</option>
+                    <option value="cableWoodchopper">Cable Woodchopper</option>
+                    <option value="deadBug">Dead Bug</option>
+                    <option value="bicycleCrunch">Bicycle Crunch</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="weight">Weight (lbs)</label>
+                  <input type="number" name="exercises[0][weight]" min="0" required>
+                </div>
+                <div class="form-group">
+                  <label for="sets">Sets</label>
+                  <input type="number" name="exercises[0][sets]" min="1" required>
+                </div>
+                <div class="form-group">
+                  <label for="reps">Reps</label>
+                  <input type="number" name="exercises[0][reps]" min="1" required>
+                </div>
+              </div>
+            </div>
+            <button type="button" id="addExercise" class="secondary-button">+ Add Another Exercise</button>
+          </div>
+
+          <!-- Notes -->
+          <div class="form-section">
+            <h2>Notes</h2>
+            <div class="form-group">
+              <textarea name="notes" rows="3" placeholder="How was your workout? Any achievements or challenges?"></textarea>
+            </div>
+          </div>
+
+          <button type="submit" class="primary-button">Save Workout</button>
+        </form>
+      </div>
+      <%- include('partials/nav.ejs') %>
+    </div>
+    <script src="/js/trackProgress.js"></script>
+  </body>
+</html> 

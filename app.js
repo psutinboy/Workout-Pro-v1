@@ -11,6 +11,8 @@ const MongoStore = require('connect-mongo');
 const dotenv = require('dotenv');
 const createError = require('http-errors');
 const User = require('./models/user'); // Ensure User model is imported
+const progressTrackerRouter = require('./routes/routeProgressTracker');
+const trackProgressRouter = require('./routes/routeTrackProgress');
 
 // Load environment variables from .env file
 dotenv.config();
@@ -103,6 +105,8 @@ app.use('/signup', signupRouter);
 app.use('/settings', settingsRouter);
 app.use('/pastWorkouts', pastWorkoutsRouter);
 app.use('/chat', chatRouter);
+app.use('/progressTracker', progressTrackerRouter);
+app.use('/trackProgress', trackProgressRouter);
 
 // Login route
 app.get('/login', (req, res) => {

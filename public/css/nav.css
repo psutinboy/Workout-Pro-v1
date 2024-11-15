@@ -2,6 +2,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
+
 }
 
 .navbar {
@@ -142,7 +143,7 @@ body {
 .hamburger-menu {
   position: fixed;
   top: 0;
-  left: -300px; /* Start off-screen */
+  left: -1400px; /* Start off-screen */
   width: 40%;
   height: 100%;
   background-color: white;
@@ -197,4 +198,34 @@ body {
     .hamburger-menu {
         width: 200px;
     }
+}
+
+@media (min-width: 500px) {
+  .fixed-bottom {
+    width: 500px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* Update modal positioning for larger screens */
+  .modal-content {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 500px;
+  }
+
+  /* Update hamburger menu positioning */
+  .hamburger-menu {
+    left: calc(50% - 1500px - 200px); /* 50% - half of page-wrapper width - menu width */
+  }
+
+  .menu-open .hamburger-menu {
+    left: calc(50% - 249px) !important;
+  }
+
+  /* Update hamburger icon positioning */
+  .menu-icon {
+    left: calc(50% - 240px);
+  }
 }

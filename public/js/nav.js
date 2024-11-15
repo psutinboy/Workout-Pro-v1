@@ -57,5 +57,9 @@ function goToProgressTrackerPage() {
   window.location.href = "/progressTracker";
 }
 
+function goToTrackProgressPage() {
+  window.location.href = '/trackProgress';
+}
+
 // Close the menu when the overlay is clicked
 document.getElementById("menuOverlay").addEventListener("click", toggleMenu);

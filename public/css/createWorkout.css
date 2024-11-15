@@ -9,22 +9,25 @@ body {
   margin: 0;
 }
 
+.header-container {
+  position: absolute;
+  top: 2vw;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+  width: 100%;
+}
+
 .home {
   width: 32px;
   height: 32px;
-  margin-top: 1.5vh;
-  margin-left: 1vh;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 
 h1 {
-  margin: 0 0 20px 0;
-  position: absolute;
-  top: 0;
-  margin-top: 2vw;
-  margin-left: 1vh;
+  margin: 0;
 }
 
 .chat-container {
@@ -172,5 +175,17 @@ h1 {
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 500px) {
+  .header-container {
+    top: 2vh;
+  }
+}
+
+@media (min-width: 500px) {
+  .home {
+    margin-right: 3vh;
   }
 }

@@ -7,21 +7,28 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f0f0f0;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
-  text-align: center;
-  text-wrap: wrap;
-  overflow-x: hidden;
+}
+
+.page-wrapper {
+  width: 100%;
+  max-width: 500px;
+  background-color: white;
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .container {
+  flex: 1;
   text-align: center;
   margin: 20px;
-  width: 90%;
   padding-bottom: 60px;
-  word-wrap: break-word; /* Allows long words to be broken and wrap to the next line */
-  word-break: break-all; /* Ensures that the text will break and wrap to the next line */
+  word-wrap: break-word;
+  word-break: break-word;
 }
 
 .workout-box {
@@ -102,7 +109,7 @@ body {
 
 .button-container {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   gap: 10px;
   margin-top: 10px;
@@ -121,6 +128,12 @@ body {
   text-decoration: none;
   display: inline-flex;
   align-items: center;
+}
+
+.set-current-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding-left: -10px;
 }
 
 .edit-btn {
@@ -282,4 +295,19 @@ body {
   border-radius: 5px;
   margin-bottom: 15px;
   font-style: italic;
+}
+
+@media (min-width: 500px) {
+  body {
+    background-color: #f0f0f0;
+  }
+
+  .page-wrapper {
+    margin-top: 0 !important;
+    width: 100%;
+    min-height: 100vh;
+    max-width: 500px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
 }

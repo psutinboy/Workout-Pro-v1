@@ -1,27 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"
+    />
     <title>Create New Workout</title>
-    <link rel="apple-touch-icon" href="/public/images/workout-pro-logo.png">
-    <link rel="apple-touch-icon-precomposed" href="/public/images/workout-pro-logo.png">
-    <link rel="stylesheet" href="/css/createWorkout.css">
-</head>
-<body>
-    <img src="/images/home.png" alt="Home" class="home" onclick="goToHomePage()">
-    <h1>Create New Workout</h1>
-    <div class="chat-container" id="chat-container">
-        <!-- Chat messages will be appended here -->
+    <link rel="apple-touch-icon" href="/public/images/workout-pro-logo.png" />
+    <link
+      rel="apple-touch-icon-precomposed"
+      href="/public/images/workout-pro-logo.png"
+    />
+    <link rel="stylesheet" href="/css/createWorkout.css" />
+  </head>
+  <body>
+    <div class="header-container">
+      <img
+        src="/images/home.png"
+        alt="Home"
+        class="home"
+        onclick="goToHomePage()"
+      />
+      <h1>Create New Workout</h1>
     </div>
-    
+    <div class="chat-container" id="chat-container">
+      <!-- Chat messages will be appended here -->
+    </div>
+
     <div class="question-container" id="question-container">
-        <p id="question-text"></p>
-        <input type="text" id="answer-input" placeholder="Type your answer here"/>
-        <button id="next-button">Send</button>
+      <p id="question-text"></p>
+      <input
+        type="text"
+        id="answer-input"
+        placeholder="Type your answer here"
+      />
+      <button id="next-button">Send</button>
     </div>
 
     <script src="/js/createWorkout.js"></script>
-    <script> src="/routes/routeIndex.js"</script>
-</body>
+    <script>
+      src = "/routes/routeIndex.js";
+    </script>
+  </body>
 </html>
